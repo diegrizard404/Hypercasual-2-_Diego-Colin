@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +11,12 @@ public class FollowPlayer : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] GameObject player;
+    [SerializeField] GameObject menu;
+    [SerializeField] GameObject spawner;
+
+    [SerializeField] private TMP_Text texto;
+    public int score = 0;
 
     private bool canShoot;
     private float timer;
@@ -16,6 +24,7 @@ public class FollowPlayer : MonoBehaviour
     private void Awake()
     {
         actions = new PlayerInputActions();
+        
     }
 
     private void Start()
@@ -40,6 +49,17 @@ public class FollowPlayer : MonoBehaviour
                 timer = 0;
             }
         }
+
+        texto.text = "" + score;
+
+        if (score == 10 && score > 10)
+        {
+            player.SetActive(false);
+            menu.SetActive(true);
+            spawner.SetActive(false);
+
+          
+        }
     }
 
     private void Move()
@@ -61,5 +81,28 @@ public class FollowPlayer : MonoBehaviour
             }
         }
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            player.SetActive(false);
+            menu.SetActive(true);
+            spawner.SetActive(false);
+
+            texto.text = "";
+
+            
+            
+        }
+    }
+
+    public void Puntos()
+    {
+        score++;
+
+        Debug.Log(score);
+        texto.text = "" + score;
     }
 }

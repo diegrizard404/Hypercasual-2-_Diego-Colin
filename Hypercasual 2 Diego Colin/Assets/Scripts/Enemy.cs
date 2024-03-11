@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -57,5 +58,15 @@ public class Enemy : MonoBehaviour
 
         rb.AddForce(direction * pushForce, ForceMode2D.Impulse);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+
+        }
+    }
+
 
 }
